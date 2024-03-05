@@ -25,7 +25,8 @@ class FileStorage:
 
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
-        FileStorage.__objects[f"{obj.__class__}.{obj.id}"] = obj
+        key = f"{obj.__class__.__name__}.{obj.id}"
+        FileStorage.__objects[key] = obj
 
     def save(self):
         """serializes __objects to the JSON file"""
@@ -38,7 +39,9 @@ class FileStorage:
         fileName = FileStorage.__file_path
         if os.path.exists(fileName):
             with open(fileName, mode="r", encoding="utf-8") as f:
-                tmp_dict = json.loads(f.read())
+                res = f.read()
+                res = "{}" if len(res) == 0 else res
+                tmp_dict = json.loads(res)
                 for obj in tmp_dict.values():
                     name = obj["__class__"]
                     self.new(globals()[name](**obj))
