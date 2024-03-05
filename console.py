@@ -10,12 +10,13 @@ class HBNBCommand(cmd.Cmd):
     """This class handle all the CMD interpreter"""
 
     prompt = "(hbnb) "
+    allowedObjs = ["BaseModel", "User"]
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
         if not line:
             print("** class name missing **")
-        elif line != "BaseModel":
+        elif line not in HBNBCommand.allowedObjs:
             print("** class doesn't exist **")
         else:
             obj = BaseModel()
@@ -31,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
             dict = storage.all()
-            if args[0] != "BaseModel":
+            if args[0] not in HBNBCommand.allowedObjs:
                 print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
@@ -47,7 +48,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
             dict = storage.all()
-            if args[0] != "BaseModel":
+            if args[0] not in HBNBCommand.allowedObjs:
                 print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
@@ -64,7 +65,7 @@ class HBNBCommand(cmd.Cmd):
         dict = storage.all()
         if not line:
             print([str(obj) for obj in dict.values()])
-        elif line != "BaseModel":
+        elif line not in HBNBCommand.allowedObjs:
             print("** class doesn't exist **")
         else:
             tmpList = []
@@ -82,7 +83,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
             dict = storage.all()
-            if args[0] != "BaseModel":
+            if args[0] not in HBNBCommand.allowedObjs:
                 print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
