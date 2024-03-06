@@ -3,8 +3,14 @@
     and load data from JSON file
 """
 
-import json
 import os
+import json
+from ..user import User
+from ..city import City
+from ..place import Place
+from ..state import State
+from ..review import Review
+from ..amenity import Amenity
 from ..base_model import BaseModel
 
 
@@ -13,8 +19,14 @@ class FileStorage:
         to a JSON file and deserializes JSON file
         to instances.
     """
+
     __file_path = "file.json"
     __objects = {}
+    supportedClss = {
+        "BaseModel": BaseModel, "User": User, "Place": Place,
+        "State": State, "City": City, "Amenity": Amenity,
+        "Review": Review
+    }
 
     def __init__(self):
         pass
@@ -43,5 +55,5 @@ class FileStorage:
                 res = "{}" if len(res) == 0 else res
                 tmp_dict = json.loads(res)
                 for obj in tmp_dict.values():
-                    name = obj["__class__"]
-                    self.new(globals()[name](**obj))
+                    cls = obj["__class__"]
+                    self.new(FileStorage.supportedClss[cls](**obj))

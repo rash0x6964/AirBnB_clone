@@ -3,6 +3,12 @@
 
 import cmd
 from models.base_model import BaseModel
+from models.user import User
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from models.amenity import Amenity
 from models import storage
 
 
@@ -10,7 +16,7 @@ class HBNBCommand(cmd.Cmd):
     """This class handle all the CMD interpreter"""
 
     prompt = "(hbnb) "
-    allowedObjs = ["BaseModel", "User"]
+    allowedObjs = storage.supportedClss.keys()
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
@@ -19,7 +25,7 @@ class HBNBCommand(cmd.Cmd):
         elif line not in HBNBCommand.allowedObjs:
             print("** class doesn't exist **")
         else:
-            obj = BaseModel()
+            obj = storage.supportedClss[line]()
             obj.save()
             print(obj.id)
 
