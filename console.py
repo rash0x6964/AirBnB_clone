@@ -10,6 +10,7 @@ from models.review import Review
 from models.state import State
 from models.amenity import Amenity
 from models import storage
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -104,6 +105,32 @@ class HBNBCommand(cmd.Cmd):
                 obj = dict[f"{cls}.{id}"]
                 setattr(obj, attr, val)
                 storage.save()
+
+    def onecmd(self, s):
+        """implement a specific cmd"""
+        args = s.split(".")
+        showPattern = r"show\(\"(.*?)\"\)"
+        destroyPatter = r"destroy\(\"(.*?)\"\)"
+        if args[0] in HBNBCommand.allowedObjs\
+            and args[1] == "all()":
+                self.do_all(args[0])
+        elif args[0] in HBNBCommand.allowedObjs\
+            and args[1] == "count()":
+                l = []
+                for obj in storage.all().values():
+                    if obj.__class__.__name__ == args[0]:
+                        l.append(obj)
+                print(len(l))
+        elif args[0] in HBNBCommand.allowedObjs\
+            and re.match(showPattern, args[1]):
+            id = args[1].split('"')[1]
+            self.do_show(f"{args[0]} {id}")
+        elif args[0] in HBNBCommand.allowedObjs\
+            and re.match(destroyPatter, args[1]):
+            id = args[1].split('"')[1]
+            self.do_destroy(f"{args[0]} {id}")
+        else:
+            return cmd.Cmd.onecmd(self, s)
 
     def do_EOF(self, line):
         """typing Ctrl-D will drop us out of the interpreter."""
