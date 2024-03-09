@@ -37,4 +37,13 @@ Your file organization in the tests folder should be the same as your project e.
 All your tests should be executed by using this command: python3 -m unittest discover tests You can also test file by file by using this command: python3 -m unittest tests/test_models/test_base_model.py
 All your modules should have a documentation (python3 -c 'print(__import__("my_module").__doc__)')
 All your classes should have a documentation (python3 -c 'print(__import__("my_module").MyClass.__doc__)')
-All your functions (inside and outside a class) should have a documentation (python3 -c 'print(__import__("my_module").my_function.__doc__)' and python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)')
+All your functions (inside and outside a class) should have a documentation (python3 -c 'print(__import__("my_module").my_function.__doc__)' and python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__))
+
+Description of command interpreter
+It’s exactly the same as simple shell but limited to a specific use-case. In our case, we want to be able to manage the objects of our project:
+
+Create a new object (ex: a new User or a new Place)
+Retrieve an object from a file, a database etc…
+Do operations on objects (count, compute stats, etc…)
+Update attributes of an object
+Destroy an object
