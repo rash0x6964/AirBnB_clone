@@ -21,9 +21,9 @@ class TestCity(unittest.TestCase):
         """Tests that attribute get assigned correctly."""
         self.city.state_id = self.state.id
         self.city.name = "someWhere"
-        
+
         self.assertEqual(self.city.state_id, self.state.id)
-        self.assertEqual(self.city.name , "someWhere")
+        self.assertEqual(self.city.name, "someWhere")
 
 
 if __name__ == '__main__':

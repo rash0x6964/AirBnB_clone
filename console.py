@@ -12,8 +12,10 @@ from models.amenity import Amenity
 from models import storage
 import re
 
+
 def validCls(cls):
     return cls in HBNBCommand.allowedObjs
+
 
 class HBNBCommand(cmd.Cmd):
     """This class handle all the CMD interpreter"""
@@ -118,13 +120,13 @@ class HBNBCommand(cmd.Cmd):
         matchUpdate = re.match(r"^(.*?).update\((.*?), (.*?), (.*?)\)$", s)
 
         if matchAll and validCls(matchAll.group(1)):
-                self.do_all(matchAll.group(1))
+            self.do_all(matchAll.group(1))
         elif matchCount and validCls(matchCount.group(1)):
-            l = []
+            lis = []
             for obj in storage.all().values():
                 if obj.__class__.__name__ == matchCount.group(1):
-                    l.append(obj)
-            print(len(l))
+                    lis.append(obj)
+            print(len(lis))
         elif matchShow and validCls(matchShow.group(1)):
             id = matchShow.group(2).strip('"') or ""
             argFormat = f"{matchShow.group(1)} " + id
