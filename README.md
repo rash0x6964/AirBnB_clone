@@ -113,3 +113,11 @@ City
 Amenity
 Place
 Review
+
+Daynamic Commands:
+
+Command	Example
+[class name].all()	User.all()
+[class name].count()	User.count()
+[class name].show(id)	User.show("1234-1536-7358")
+
