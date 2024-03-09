@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Model test for BaseModel"""
+
 import unittest
 import uuid
 from datetime import datetime, timedelta

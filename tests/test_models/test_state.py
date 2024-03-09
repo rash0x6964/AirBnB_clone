@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Model test for State"""
+
 from models.state import State
 from models.base_model import BaseModel
 import unittest

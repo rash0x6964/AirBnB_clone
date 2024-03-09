@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Model test for Place"""
+
 from models.place import Place
 from models.user import User
 from models.city import City

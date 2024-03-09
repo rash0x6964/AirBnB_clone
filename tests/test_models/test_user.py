@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Model test for User"""
+
 import unittest
 from models.user import User
 

@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Model test for Amenity"""
+
 import unittest
 from models.amenity import Amenity
 

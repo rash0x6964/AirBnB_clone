@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Model test for Review"""
+
 from models.review import Review
 from models.place import Place
 from models.user import User

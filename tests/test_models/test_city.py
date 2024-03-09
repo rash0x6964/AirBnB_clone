@@ -1,3 +1,6 @@
+#!/usr/bin/python3
+"""Model test for City"""
+
 from models.city import City
 from models.state import State
 from models.base_model import BaseModel
