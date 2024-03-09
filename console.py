@@ -10,6 +10,11 @@ from models.review import Review
 from models.state import State
 from models.amenity import Amenity
 from models import storage
+import re
+
+
+def validCls(cls):
+    return cls in HBNBCommand.allowedObjs
 
 
 class HBNBCommand(cmd.Cmd):
@@ -22,7 +27,7 @@ class HBNBCommand(cmd.Cmd):
         """Creates a new instance of BaseModel"""
         if not line:
             print("** class name missing **")
-        elif line not in HBNBCommand.allowedObjs:
+        elif not validCls(line):
             print("** class doesn't exist **")
         else:
             obj = storage.supportedClss[line]()
@@ -38,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
             dict = storage.all()
-            if args[0] not in HBNBCommand.allowedObjs:
+            if not validCls(args[0]):
                 print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
@@ -54,7 +59,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
             dict = storage.all()
-            if args[0] not in HBNBCommand.allowedObjs:
+            if not validCls(args[0]):
                 print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
@@ -71,7 +76,7 @@ class HBNBCommand(cmd.Cmd):
         dict = storage.all()
         if not line:
             print([str(obj) for obj in dict.values()])
-        elif line not in HBNBCommand.allowedObjs:
+        elif not validCls(line):
             print("** class doesn't exist **")
         else:
             tmpList = []
@@ -89,7 +94,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             args = line.split()
             dict = storage.all()
-            if args[0] not in HBNBCommand.allowedObjs:
+            if not validCls(args[0]):
                 print("** class doesn't exist **")
             elif len(args) < 2:
                 print("** instance id missing **")
@@ -104,6 +109,40 @@ class HBNBCommand(cmd.Cmd):
                 obj = dict[f"{cls}.{id}"]
                 setattr(obj, attr, val)
                 storage.save()
+
+    def onecmd(self, s):
+        """implement a specific cmd"""
+
+        matchAll = re.match(r"^(.*?).all\(\)$", s)
+        matchCount = re.match(r"^(.*?).count\(\)$", s)
+        matchShow = re.match(r"^(.*?).show\((.*?)\)$", s)
+        matchDestory = re.match(r"^(.*?).destroy\((.*?)\)$", s)
+        matchUpdate = re.match(r"^(.*?).update\((.*?), (.*?), (.*?)\)$", s)
+
+        if matchAll and validCls(matchAll.group(1)):
+            self.do_all(matchAll.group(1))
+        elif matchCount and validCls(matchCount.group(1)):
+            lis = []
+            for obj in storage.all().values():
+                if obj.__class__.__name__ == matchCount.group(1):
+                    lis.append(obj)
+            print(len(lis))
+        elif matchShow and validCls(matchShow.group(1)):
+            id = matchShow.group(2).strip('"') or ""
+            argFormat = f"{matchShow.group(1)} " + id
+            self.do_show(argFormat)
+        elif matchDestory and validCls(matchDestory.group(1)):
+            id = matchDestory.group(2).strip('"') or ""
+            argFormat = f"{matchDestory.group(1)} {id}"
+            self.do_destroy(argFormat)
+        elif matchUpdate and validCls(matchUpdate.group(1)):
+            id = matchUpdate.group(2).strip('"') or ""
+            key = matchUpdate.group(3).strip('"') or ""
+            value = matchUpdate.group(4).strip('"') or ""
+            argFormat = f"{matchUpdate.group(1)} {id} {key} {value}"
+            self.do_update(argFormat)
+        else:
+            return cmd.Cmd.onecmd(self, s)
 
     def do_EOF(self, line):
         """typing Ctrl-D will drop us out of the interpreter."""
