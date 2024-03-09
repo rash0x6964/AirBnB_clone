@@ -1,4 +1,4 @@
-## hbnb: A Persistent Object Storage Engine with Console Interface
+## AirBnB: A Persistent Object Storage Engine with Console Interface
 
 This project implements a persistent object storage engine along with a console interface for managing objects. It provides an abstraction layer between your application logic and data storage, allowing you to easily switch between different storage backends without modifying your codebase.
 

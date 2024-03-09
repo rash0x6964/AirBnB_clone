@@ -41,7 +41,7 @@ class TestBaseModel(unittest.TestCase):
         """Tests string representation."""
         model = BaseModel()
         expected_str = (
-            f"[{model.__class__.__name__}]"
+            f"[{model.__class__.__name__}] "
             f"({model.id}) {model.__dict__}"
         )
         self.assertEqual(str(model), expected_str)
