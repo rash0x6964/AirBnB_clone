@@ -6,7 +6,6 @@
     border-radius: 4px;
     display: flex;
     align-items: center;
-    justify-content: end;
 }
 
 button {
@@ -18,8 +17,34 @@ button {
     border: none;
     border-radius: 4px;
     margin-right: 30px;
+    margin-left: auto;
 }
 
 button:hover {
     opacity: 90%;
+}
+
+.filters div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 25%;
+}
+
+h3, h4 {
+    margin-left: 15%;
+}
+
+h3 {
+    font-weight: 600;
+}
+
+h4 {
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.locations {
+    border-right: solid 1px #DDDDDD;
 }
